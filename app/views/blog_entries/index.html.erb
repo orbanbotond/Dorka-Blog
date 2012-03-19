@@ -1,0 +1,41 @@
+<h1>Listing Blog</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @blog_entries.each do |blog_entry| %>
+  <tr>
+    <td><%= blog_entry.title %></td>
+    <td><%= blog_entry.description.first 15 %></td>
+    <td><%= link_to 'Show', blog_entry %></td>
+    <td><%= link_to 'Edit', edit_blog_entry_path(blog_entry) %></td>
+    <td><%= link_to 'Destroy', blog_entry, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p>
+  <% tag_cloud(@speed_tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+    <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => css_class %>
+  <% end %>
+</p>
+
+<p>
+  <% tag_cloud(@topic_tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+    <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => css_class %>
+  <% end %>
+</p>
+
+<% if params[:action] == 'tag' %>
+  <p><%= link_to 'Show all Blog Entries', blog_entries_path %></p>
+<% end %>
+
+<%= link_to 'New Blog entry', new_blog_entry_path %>
